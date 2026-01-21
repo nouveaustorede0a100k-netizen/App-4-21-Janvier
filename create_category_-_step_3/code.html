@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Category - Step 3</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3880f5",
+                        "background-light": "#ffffff",
+                        "background-dark": "#16181d",
+                        "surface-light": "#f8f9fc",
+                        "surface-dark": "#1f232b",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                    boxShadow: {
+                        "soft": "0 10px 40px -10px rgba(0,0,0,0.08)",
+                        "glow": "0 0 20px -5px rgba(56, 128, 245, 0.3)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Utilities for distinct visuals */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(22, 24, 29, 0.7);
+        }
+        
+        .pattern-grid {
+            background-image: radial-gradient(rgba(56, 128, 245, 0.1) 1px, transparent 1px);
+            background-size: 12px 12px;
+        }
+
+        /* Liquid animation for Fill Container */
+        @keyframes liquid {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        .liquid-fill {
+            animation: liquid 4s ease-in-out infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-100 dark:bg-black font-display antialiased selection:bg-primary/30">
+<!-- Screen Container with Dimmed Background -->
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4">
+<!-- Ambient Background Elements -->
+<div class="absolute inset-0 z-0 overflow-hidden">
+<div class="absolute -left-[10%] -top-[10%] h-[50vh] w-[50vh] rounded-full bg-primary/10 blur-[100px]"></div>
+<div class="absolute bottom-[10%] right-[10%] h-[40vh] w-[40vh] rounded-full bg-purple-500/5 blur-[100px]"></div>
+<!-- Mock App Background Content (blurred behind modal) -->
+<div class="h-full w-full opacity-30 dark:opacity-20 bg-[url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80')] bg-cover bg-center" data-alt="Blurred interface background"></div>
+</div>
+<!-- Modal Card -->
+<div class="relative z-10 flex w-full max-w-[380px] flex-col overflow-hidden rounded-2xl bg-background-light shadow-soft dark:bg-background-dark ring-1 ring-black/5 dark:ring-white/10 transition-all duration-300">
+<!-- Progress Header -->
+<div class="flex flex-col gap-3 px-6 pt-8 pb-2">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">Step 3 of 4</span>
+<span class="text-xs font-bold text-primary">75%</span>
+</div>
+<!-- Segmented Progress Bar -->
+<div class="flex h-1.5 w-full gap-1.5">
+<div class="h-full flex-1 rounded-full bg-primary/30"></div>
+<div class="h-full flex-1 rounded-full bg-primary/30"></div>
+<div class="h-full flex-1 rounded-full bg-primary shadow-[0_0_10px_rgba(56,128,245,0.5)]"></div>
+<div class="h-full flex-1 rounded-full bg-gray-100 dark:bg-gray-800"></div>
+</div>
+</div>
+<!-- Content Body -->
+<div class="flex flex-col px-6 pt-4 pb-8">
+<h1 class="text-[28px] font-bold leading-tight text-gray-900 dark:text-white">
+                    How should we <span class="text-primary">track</span> this?
+                </h1>
+<p class="mt-2 text-[15px] font-medium leading-relaxed text-gray-500 dark:text-gray-400">
+                    Select the visual style that best represents your goal progress.
+                </p>
+<!-- Selection Grid -->
+<div class="mt-8 grid grid-cols-2 gap-4">
+<!-- Option 1: Linear Bar (Selected) -->
+<button class="col-span-2 group relative flex flex-row items-center gap-4 rounded-xl border-2 border-primary bg-primary/[0.03] p-4 text-left shadow-glow transition-all active:scale-[0.98] dark:bg-primary/[0.08]">
+<div class="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+<!-- Visual Preview: Linear -->
+<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm dark:bg-gray-800">
+<span class="material-symbols-outlined text-primary">linear_scale</span>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<span class="text-base font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Linear Bar</span>
+<!-- Mini visualization -->
+<div class="mt-2 h-1.5 w-full max-w-[120px] overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+<div class="h-full w-[70%] rounded-full bg-primary"></div>
+</div>
+</div>
+</button>
+<!-- Option 2: Circular Ring -->
+<button class="relative flex flex-col items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-center transition-all hover:border-primary/40 hover:shadow-md active:scale-[0.98] dark:border-gray-700 dark:bg-surface-dark dark:hover:border-primary/40 aspect-[4/3]">
+<!-- Visual Preview: Circular CSS -->
+<div class="relative h-12 w-12">
+<svg class="h-full w-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-gray-400 dark:text-gray-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="60, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+</div>
+<span class="text-sm font-semibold text-gray-600 dark:text-gray-300">Circular Ring</span>
+</button>
+<!-- Option 3: Fill Container -->
+<button class="relative flex flex-col items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-center transition-all hover:border-primary/40 hover:shadow-md active:scale-[0.98] dark:border-gray-700 dark:bg-surface-dark dark:hover:border-primary/40 aspect-[4/3]">
+<!-- Visual Preview: Fill Container CSS -->
+<div class="flex h-12 w-12 items-end justify-center overflow-hidden rounded border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-black/20">
+<div class="liquid-fill w-full bg-gray-400/50 h-[60%] dark:bg-gray-500/50 backdrop-blur-sm rounded-b-[3px]"></div>
+</div>
+<span class="text-sm font-semibold text-gray-600 dark:text-gray-300">Fill Container</span>
+</button>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex items-center justify-between border-t border-gray-100 bg-gray-50/80 px-6 py-5 backdrop-blur-sm dark:border-gray-800 dark:bg-surface-dark/50">
+<button class="group flex h-10 min-w-[84px] cursor-pointer items-center justify-center rounded-lg px-4 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+<span class="transition-transform group-hover:-translate-x-0.5">Back</span>
+</button>
+<button class="flex h-11 min-w-[120px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-blue-600 hover:shadow-primary/40 active:scale-95">
+<span>Next</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

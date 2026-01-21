@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finance Category Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3880f5",
+                        "background-light": "#ffffff",
+                        "background-dark": "#16181d",
+                        "surface-light": "#f8f9fc",
+                        "surface-dark": "#1e2128",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem", 
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 8px 30px rgba(0,0,0,0.04)",
+                        "glow": "0 0 20px rgba(56, 128, 245, 0.15)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Epilogue', sans-serif;
+        }
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .checkbox-wrapper input:checked + div {
+            background-color: #3880f5;
+            border-color: #3880f5;
+        }
+        .checkbox-wrapper input:checked + div span {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto bg-surface-light dark:bg-background-dark shadow-2xl">
+<!-- Header -->
+<header class="flex items-center justify-between px-6 pt-12 pb-4 bg-background-light dark:bg-background-dark z-20">
+<button class="flex size-10 items-center justify-center rounded-full bg-slate-50 dark:bg-surface-dark text-slate-900 dark:text-white hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight">Finance</h1>
+<button class="flex size-10 items-center justify-center rounded-full bg-slate-50 dark:bg-surface-dark text-slate-900 dark:text-white hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+</button>
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 overflow-y-auto no-scrollbar pb-24 px-6 space-y-8">
+<!-- Hero Progress Card -->
+<section class="mt-4">
+<div class="group relative overflow-hidden rounded-2xl bg-white dark:bg-surface-dark p-6 shadow-soft transition-all hover:shadow-lg border-l-[6px] border-primary">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1 font-body uppercase tracking-wider">Active Goal</p>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white leading-tight">Annual Travel Fund</h2>
+</div>
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">flight_takeoff</span>
+</div>
+</div>
+<div class="flex items-end gap-1 mb-3">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">$6,500</span>
+<span class="text-slate-400 dark:text-slate-500 text-lg font-medium mb-1">/ $10,000</span>
+</div>
+<div class="relative h-4 w-full rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full transition-all duration-1000 ease-out w-[65%]"></div>
+</div>
+<div class="mt-3 flex justify-between items-center text-sm">
+<span class="text-primary font-bold">65% Funded</span>
+<span class="text-slate-400">Keep going!</span>
+</div>
+</div>
+</section>
+<!-- Sub-category Pills -->
+<section class="flex gap-3 overflow-x-auto no-scrollbar py-1">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-6 shadow-glow transition-transform active:scale-95">
+<span class="material-symbols-outlined text-white text-[18px]">savings</span>
+<p class="text-white text-sm font-medium font-body">Savings</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 px-6 transition-transform active:scale-95">
+<p class="text-slate-600 dark:text-slate-300 text-sm font-medium font-body">Expenses</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 px-6 transition-transform active:scale-95">
+<p class="text-slate-600 dark:text-slate-300 text-sm font-medium font-body">Investments</p>
+</button>
+</section>
+<!-- Daily Goals Section -->
+<section>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 px-1">Daily Habits</h3>
+<div class="flex flex-col gap-3">
+<!-- Goal Item 1 -->
+<label class="checkbox-wrapper cursor-pointer group flex items-center justify-between p-4 rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all">
+<div class="flex items-center gap-4">
+<input checked="" class="hidden peer" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 transform scale-50 transition-all">check</span>
+</div>
+<span class="text-slate-700 dark:text-slate-200 font-medium peer-checked:text-slate-400 peer-checked:line-through transition-colors">No spend day</span>
+</div>
+<div class="text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+</label>
+<!-- Goal Item 2 -->
+<label class="checkbox-wrapper cursor-pointer group flex items-center justify-between p-4 rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all">
+<div class="flex items-center gap-4">
+<input class="hidden peer" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 transform scale-50 transition-all">check</span>
+</div>
+<span class="text-slate-700 dark:text-slate-200 font-medium peer-checked:text-slate-400 peer-checked:line-through transition-colors">Review credit card</span>
+</div>
+<div class="text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+</label>
+<!-- Goal Item 3 -->
+<label class="checkbox-wrapper cursor-pointer group flex items-center justify-between p-4 rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all">
+<div class="flex items-center gap-4">
+<input class="hidden peer" type="checkbox"/>
+<div class="w-6 h-6 rounded-md border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 transform scale-50 transition-all">check</span>
+</div>
+<span class="text-slate-700 dark:text-slate-200 font-medium peer-checked:text-slate-400 peer-checked:line-through transition-colors">Transfer $5 to savings</span>
+</div>
+<div class="text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Daily Notes Section -->
+<section>
+<div class="flex justify-between items-end mb-4 px-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Daily Notes (Finance)</h3>
+<span class="text-xs text-slate-400 font-medium">Auto-saving</span>
+</div>
+<div class="relative group">
+<textarea class="w-full h-32 p-4 rounded-2xl bg-white dark:bg-surface-dark border-0 shadow-soft resize-none text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-primary/20 outline-none transition-shadow" placeholder="Track your spending thoughts... did you resist that coffee today?"></textarea>
+<button class="absolute bottom-4 right-4 bg-primary text-white p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all transform scale-90 group-hover:scale-100">
+<span class="material-symbols-outlined text-[20px]">save</span>
+</button>
+</div>
+</section>
+<!-- Footer Space -->
+<div class="h-8"></div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="absolute bottom-0 left-0 w-full bg-white/90 dark:bg-surface-dark/90 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 pb-6 pt-2 px-6">
+<div class="flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-primary">
+<div class="bg-primary/10 px-4 py-0.5 rounded-full mb-0.5">
+<span class="material-symbols-outlined text-primary filled">account_balance_wallet</span>
+</div>
+<span class="text-[10px] font-bold">Finance</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-[10px] font-medium">Analytics</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</nav>
+</div>
+</body></html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Authentication - Sign In</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3880f5",
+                        "primary-dark": "#2a6ac7",
+                        "background-light": "#ffffff",
+                        "background-dark": "#16181d",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#22252e",
+                        "input-bg-light": "#f8f9fc",
+                        "input-bg-dark": "#2c303b",
+                        "border-light": "#ced8e8",
+                        "border-dark": "#3e4552",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                    boxShadow: {
+                        "soft": "0 20px 40px -10px rgba(0, 0, 0, 0.05)",
+                        "glow": "0 0 15px rgba(56, 128, 245, 0.3)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary selection:text-white">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4 overflow-hidden">
+<!-- Decorative subtle background element -->
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-100 dark:bg-blue-800/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+<!-- Main Card -->
+<div class="relative w-full max-w-[380px] bg-surface-light dark:bg-surface-dark rounded-2xl shadow-soft dark:shadow-none border border-slate-100 dark:border-slate-800 p-6 sm:p-8 flex flex-col gap-6 z-10">
+<!-- Logo Section -->
+<div class="flex flex-col items-center gap-3">
+<div class="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 dark:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">track_changes</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-center">Goal Tracker</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm text-center font-body">Stay focused, hit your marks.</p>
+</div>
+<!-- Segmented Control (Tabs) -->
+<div class="w-full rounded-xl bg-input-bg-light dark:bg-input-bg-dark p-1.5">
+<div class="grid grid-cols-2 gap-1 relative">
+<!-- Sign In Tab (Active) -->
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="auth_mode" type="radio" value="signin"/>
+<div class="flex items-center justify-center py-2.5 rounded-lg text-sm font-medium transition-all duration-200 text-slate-500 dark:text-slate-400 peer-checked:bg-white dark:peer-checked:bg-slate-700 peer-checked:text-primary dark:peer-checked:text-white peer-checked:shadow-sm">
+                            Sign In
+                        </div>
+</label>
+<!-- Sign Up Tab -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="auth_mode" type="radio" value="signup"/>
+<div class="flex items-center justify-center py-2.5 rounded-lg text-sm font-medium transition-all duration-200 text-slate-500 dark:text-slate-400 peer-checked:bg-white dark:peer-checked:bg-slate-700 peer-checked:text-primary dark:peer-checked:text-white peer-checked:shadow-sm">
+                            Sign Up
+                        </div>
+</label>
+</div>
+</div>
+<!-- Inputs -->
+<form class="flex flex-col gap-4 font-body" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-200 ml-1" for="email">Email Address</label>
+<div class="relative group">
+<input class="block w-full rounded-xl border-border-light dark:border-border-dark bg-input-bg-light dark:bg-input-bg-dark p-3.5 text-base text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none" id="email" placeholder="user@example.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-200 ml-1" for="password">Password</label>
+<div class="relative flex items-center">
+<input class="block w-full rounded-xl border-border-light dark:border-border-dark bg-input-bg-light dark:bg-input-bg-dark p-3.5 pr-12 text-base text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3.5 flex items-center justify-center text-slate-400 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Forgot Password -->
+<div class="flex justify-end">
+<a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors" href="#">Forgot password?</a>
+</div>
+<!-- Primary Button -->
+<button class="group relative w-full overflow-hidden rounded-xl bg-primary p-3.5 text-white transition-all hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 active:scale-[0.98]" type="submit">
+<span class="relative z-10 flex items-center justify-center gap-2 text-base font-semibold tracking-wide">
+                        Sign In
+                        <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center gap-3 py-2">
+<div class="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Or continue with</span>
+<div class="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<!-- Social Button -->
+<button class="relative flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3.5 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 active:bg-slate-100" type="button">
+<!-- Inline SVG for Google Logo -->
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.52 12.2727C23.52 11.4273 23.4436 10.7182 23.3018 10.0364H12V14.6636H18.4727C18.2 16.1636 17.3455 17.4091 16.0909 18.2545V21.2273H19.9636C22.2327 19.1455 23.52 16.0727 23.52 12.2727Z" fill="#4285F4"></path>
+<path d="M12 24C15.24 24 17.9564 22.9273 19.9636 21.0727L16.0909 18.0818C15.0109 18.8091 13.6364 19.2364 12 19.2364C8.86909 19.2364 6.21818 17.1273 5.26909 14.2909H1.26545V17.3909C3.24 21.3091 7.30909 24 12 24Z" fill="#34A853"></path>
+<path d="M5.26909 14.2909C5.02909 13.5727 4.89818 12.8 4.89818 12C4.89818 11.2 5.02909 10.4273 5.26909 9.70909V6.60909H1.26545C0.458182 8.21818 0 10.0545 0 12C0 13.9455 0.458182 15.7818 1.26545 17.3909L5.26909 14.2909Z" fill="#FBBC05"></path>
+<path d="M12 4.76364C13.7673 4.76364 15.3382 5.37273 16.5818 6.56364L20.04 3.10909C17.9455 1.15455 15.2327 0 12 0C7.30909 0 3.24 2.69091 1.26545 6.60909L5.26909 9.70909C6.21818 6.87273 8.86909 4.76364 12 4.76364Z" fill="#EA4335"></path>
+</svg>
+<span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Google</span>
+</button>
+</div>
+<!-- Bottom Hint -->
+<p class="mt-8 text-center text-xs text-slate-400 dark:text-slate-500 font-body">
+            By signing in, you agree to our 
+            <a class="underline hover:text-slate-600 dark:hover:text-slate-300" href="#">Terms of Service</a>
+            and
+            <a class="underline hover:text-slate-600 dark:hover:text-slate-300" href="#">Privacy Policy</a>.
+        </p>
+</div>
+<!-- Preload Material Symbols to avoid flash -->
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</body></html>
