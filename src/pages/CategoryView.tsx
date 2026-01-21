@@ -30,11 +30,12 @@ export default function CategoryView() {
   const { objectives } = useObjectives(new Date(), selectedSubcategory || undefined);
 
   useEffect(() => {
+    // FIX: Ajout des dépendances manquantes
     if (id) {
       fetchCategory(id);
       fetchCompletions(undefined, new Date());
     }
-  }, [id]);
+  }, [id, fetchCategory, fetchCompletions]);
 
   if (loading) {
     return (

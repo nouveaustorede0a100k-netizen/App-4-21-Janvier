@@ -12,7 +12,7 @@ export default function AuthView() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
-  const { signIn, signUp, loading } = useUserStore();
+  const { signIn, signUp, loading, error: storeError, user } = useUserStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,12 +24,43 @@ export default function AuthView() {
           setError('Le nom est requis');
           return;
         }
+        console.log('[DEBUG] signUp called', { email, name });
         await signUp(email, password, name);
+        
+        // FIX: Pour signUp, vérifier si session immédiate ou email confirmation nécessaire
+        const { error: currentError, user: currentUser } = useUserStore.getState();
+        if (currentError) {
+          setError(currentError);
+          return;
+        }
+        
+        if (currentUser) {
+          console.log('[DEBUG] auth success, navigating');
+          navigate('/');
+        } else {
+          // Pas de session immédiate = email confirmation requise
+          setError('Vérifiez votre email pour confirmer votre compte');
+        }
       } else {
+        console.log('[DEBUG] signIn called from AuthView', { email });
         await signIn(email, password);
+        
+        // FIX: Vérifier l'erreur et l'utilisateur avant de naviguer
+        const { error: currentError, user: currentUser } = useUserStore.getState();
+        if (currentError) {
+          setError(currentError);
+          return;
+        }
+        
+        if (currentUser) {
+          console.log('[DEBUG] auth success, navigating');
+          navigate('/');
+        } else {
+          setError('Erreur lors de la connexion. Veuillez réessayer.');
+        }
       }
-      navigate('/');
     } catch (err) {
+      console.error('[DEBUG] auth error in handleSubmit', err);
       setError((err as Error).message || 'Une erreur est survenue');
     }
   };
@@ -76,9 +107,9 @@ export default function AuthView() {
             required
           />
 
-          {error && (
+          {(error || storeError) && (
             <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <p className="text-sm text-red-600 dark:text-red-400">{error || storeError}</p>
             </div>
           )}
 

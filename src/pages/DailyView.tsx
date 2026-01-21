@@ -26,9 +26,10 @@ export default function DailyView() {
   const { objectives } = useObjectives(new Date(), selectedCategory || undefined);
 
   useEffect(() => {
+    // FIX: Ajout des dépendances manquantes
     fetchCategories();
     fetchCompletions(undefined, new Date());
-  }, []);
+  }, [fetchCategories, fetchCompletions]);
 
   const handleObjectiveClick = (objectiveId: string) => {
     const isCompleted = completions.some(

@@ -21,18 +21,29 @@ export const useUserStore = create<UserState>((set, get) => ({
 
   signIn: async (email: string, password: string) => {
     set({ loading: true, error: null });
+    console.log('[DEBUG] signIn called', { email });
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       
+      console.log('[DEBUG] signInWithPassword result', { 
+        hasError: !!error, 
+        errorCode: error?.code, 
+        errorMessage: error?.message, 
+        hasUser: !!data?.user, 
+        hasSession: !!data?.session 
+      });
+      
       if (error) throw error;
       
       if (data.user) {
+        console.log('[DEBUG] calling fetchUser', { userId: data.user.id });
         await get().fetchUser();
       }
     } catch (error) {
+      console.error('[DEBUG] signIn error caught', error);
       set({ error: (error as Error).message, loading: false });
     }
   },
@@ -43,28 +54,22 @@ export const useUserStore = create<UserState>((set, get) => ({
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            name: name,
+          },
+        },
       });
       
       if (error) throw error;
       
-      if (data.user) {
-        // Create profile
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            id: data.user.id,
-            name,
-            settings: {
-              showProgressLabels: true,
-              enableAnimations: true,
-              levelSystemEnabled: false,
-              celebrationEffectsEnabled: true,
-            },
-          });
-        
-        if (profileError) throw profileError;
-        
+      // Profile will be created automatically by the trigger
+      // If user is immediately available, fetch it, otherwise it will be created on email verification
+      if (data.user && data.session) {
         await get().fetchUser();
+      } else {
+        // Email confirmation required - profile will be created by trigger when email is confirmed
+        set({ loading: false });
       }
     } catch (error) {
       set({ error: (error as Error).message, loading: false });
@@ -83,21 +88,70 @@ export const useUserStore = create<UserState>((set, get) => ({
 
   fetchUser: async () => {
     set({ loading: true, error: null });
+    console.log('[DEBUG] fetchUser called');
     try {
       const { data: { user: authUser } } = await supabase.auth.getUser();
+      
+      console.log('[DEBUG] getUser result', { 
+        hasAuthUser: !!authUser, 
+        authUserId: authUser?.id, 
+        authUserEmail: authUser?.email 
+      });
       
       if (!authUser) {
         set({ user: null, loading: false });
         return;
       }
 
-      const { data, error } = await supabase
+      // Try to fetch profile
+      let { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', authUser.id)
         .single();
       
-      if (error) throw error;
+      console.log('[DEBUG] profile fetch result', { 
+        hasError: !!error, 
+        errorCode: error?.code, 
+        errorMessage: error?.message, 
+        errorDetails: error?.details, 
+        hasData: !!data 
+      });
+      
+      // If profile doesn't exist, create it automatically
+      if (error && (error.code === 'PGRST116' || error.message?.includes('No rows returned'))) {
+        console.log('[DEBUG] profile missing, creating', { userId: authUser.id });
+        const name = authUser.user_metadata?.name || authUser.email?.split('@')[0] || 'Utilisateur';
+        
+        const { data: newProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            id: authUser.id,
+            name: name,
+            settings: {
+              showProgressLabels: true,
+              enableAnimations: true,
+              levelSystemEnabled: false,
+              celebrationEffectsEnabled: true,
+            },
+          })
+          .select()
+          .single();
+        
+        console.log('[DEBUG] profile create result', { 
+          hasError: !!createError, 
+          errorCode: createError?.code, 
+          errorMessage: createError?.message, 
+          hasProfile: !!newProfile 
+        });
+        
+        if (createError) throw createError;
+        data = newProfile;
+      } else if (error) {
+        throw error;
+      }
+      
+      console.log('[DEBUG] fetchUser success', { hasData: !!data, profileId: data?.id });
       
       set({ 
         user: {
@@ -113,6 +167,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         loading: false 
       });
     } catch (error) {
+      console.error('[DEBUG] fetchUser error caught', error);
       set({ error: (error as Error).message, loading: false });
     }
   },

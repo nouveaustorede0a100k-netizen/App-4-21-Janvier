@@ -16,20 +16,51 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = async () => {
+      console.log('[DEBUG] ProtectedRoute checkAuth');
       const { data: { session } } = await supabase.auth.getSession()
+      console.log('[DEBUG] getSession result', { 
+        hasSession: !!session, 
+        sessionUserId: session?.user?.id 
+      });
       if (session) {
-        await fetchUser()
+        try {
+          // FIX: Appeler fetchUser via useUserStore.getState() pour éviter les dépendances
+          await useUserStore.getState().fetchUser()
+          console.log('[DEBUG] fetchUser success in checkAuth');
+        } catch (error) {
+          console.error('[DEBUG] Error fetching user:', error)
+          // Retry once after a short delay
+          setTimeout(async () => {
+            try {
+              await useUserStore.getState().fetchUser()
+            } catch (retryError) {
+              console.error('[DEBUG] Retry failed:', retryError)
+            }
+          }, 1000)
+        }
       }
       setLoading(false)
     }
 
     checkAuth()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      fetchUser()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('[DEBUG] auth state change', { event, hasSession: !!session });
+      if (session) {
+        try {
+          // FIX: Utiliser getState() pour éviter la dépendance
+          await useUserStore.getState().fetchUser()
+        } catch (error) {
+          console.error('[DEBUG] Error fetching user on auth change:', error)
+        }
+      } else {
+        // Clear user on sign out
+        useUserStore.setState({ user: null })
+      }
     })
 
     return () => subscription.unsubscribe()
+    // FIX: Supprimé fetchUser des dépendances pour éviter les re-renders infinis
   }, [])
 
   if (loading) {

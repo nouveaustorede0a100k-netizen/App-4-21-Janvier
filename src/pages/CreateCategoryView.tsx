@@ -16,7 +16,7 @@ const ANIMATION_TYPES: AnimationType[] = ['progress-bar', 'progress-circle', 'fi
 
 export default function CreateCategoryView() {
   const navigate = useNavigate();
-  const { createCategory } = useCategoryStore();
+  const { createCategory, error: categoryError } = useCategoryStore();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<Partial<CreateCategoryInput>>({
     name: '',
@@ -26,6 +26,8 @@ export default function CreateCategoryView() {
     progression_mode: 'cumulative',
     target_value: undefined,
     target_unit: '',
+    monthly_target_value: undefined,
+    monthly_target_unit: '',
     decay_enabled: false,
   });
 
@@ -41,22 +43,45 @@ export default function CreateCategoryView() {
     if (!formData.name || !formData.color || !formData.icon) return;
 
     try {
-      const category = await createCategory({
+      console.log('[DEBUG] Creating category with data:', formData);
+      
+      const categoryData: CreateCategoryInput = {
         name: formData.name,
         color: formData.color,
         icon: formData.icon,
         animation_type: formData.animation_type || 'progress-bar',
         progression_mode: formData.progression_mode || 'cumulative',
-        target_value: formData.target_value,
-        target_unit: formData.target_unit,
         decay_enabled: formData.decay_enabled || false,
-      } as CreateCategoryInput);
+      };
+
+      // Add fields based on progression mode
+      if (formData.progression_mode === 'cumulative') {
+        categoryData.target_value = formData.target_value;
+        categoryData.target_unit = formData.target_unit;
+      } else if (formData.progression_mode === 'monthly') {
+        categoryData.monthly_target_value = formData.monthly_target_value;
+        categoryData.monthly_target_unit = formData.monthly_target_unit;
+      } else if (formData.progression_mode === 'weekly') {
+        categoryData.weekly_target_sessions = formData.weekly_target_sessions;
+        categoryData.scheduled_days = formData.scheduled_days;
+      }
+
+      const category = await createCategory(categoryData);
 
       if (category) {
+        console.log('[DEBUG] Category created successfully:', category);
         navigate(`/category/${category.id}`);
+      } else {
+        // FIX: Afficher l'erreur du store à l'utilisateur
+        console.error('[DEBUG] Category creation returned null');
+        const errorMessage = categoryError || 'Erreur lors de la création de la catégorie. Veuillez réessayer.';
+        alert(errorMessage);
       }
     } catch (error) {
-      console.error('Error creating category:', error);
+      console.error('[DEBUG] Error creating category:', error);
+      // FIX: Utiliser l'erreur du store si disponible, sinon l'erreur catchée
+      const errorMessage = categoryError || (error as Error).message || 'Une erreur est survenue';
+      alert('Erreur lors de la création de la catégorie: ' + errorMessage);
     }
   };
 
@@ -193,6 +218,24 @@ export default function CreateCategoryView() {
                   />
                 </div>
               )}
+
+              {formData.progression_mode === 'monthly' && (
+                <div className="space-y-4">
+                  <Input
+                    label="Valeur cible mensuelle"
+                    type="number"
+                    value={formData.monthly_target_value?.toString() || ''}
+                    onChange={(e) => setFormData({ ...formData, monthly_target_value: parseFloat(e.target.value) || undefined })}
+                    placeholder="15000"
+                  />
+                  <Input
+                    label="Unité"
+                    value={formData.monthly_target_unit || ''}
+                    onChange={(e) => setFormData({ ...formData, monthly_target_unit: e.target.value })}
+                    placeholder="€, kg, km..."
+                  />
+                </div>
+              )}
             </div>
           )}
 
@@ -250,9 +293,19 @@ export default function CreateCategoryView() {
                 <p className="text-gray-500">
                   Mode: {formData.progression_mode}
                 </p>
-                {formData.target_value && (
+                {formData.progression_mode === 'cumulative' && formData.target_value && (
                   <p className="text-gray-500">
                     Cible: {formData.target_value} {formData.target_unit}
+                  </p>
+                )}
+                {formData.progression_mode === 'monthly' && formData.monthly_target_value && (
+                  <p className="text-gray-500">
+                    Cible: {formData.monthly_target_value} {formData.monthly_target_unit}
+                  </p>
+                )}
+                {formData.progression_mode === 'weekly' && formData.weekly_target_sessions && (
+                  <p className="text-gray-500">
+                    Sessions: {formData.weekly_target_sessions}
                   </p>
                 )}
               </div>
@@ -275,7 +328,16 @@ export default function CreateCategoryView() {
                 <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
             ) : (
-              <Button onClick={handleSubmit}>
+              <Button 
+                onClick={handleSubmit}
+                disabled={
+                  !formData.name || 
+                  !formData.color || 
+                  !formData.icon ||
+                  (formData.progression_mode === 'monthly' && (!formData.monthly_target_value || !formData.monthly_target_unit)) ||
+                  (formData.progression_mode === 'cumulative' && (!formData.target_value || !formData.target_unit))
+                }
+              >
                 Créer
               </Button>
             )}

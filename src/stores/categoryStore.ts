@@ -71,20 +71,35 @@ export const useCategoryStore = create<CategoryState>((set, get) => ({
 
   createCategory: async (data: CreateCategoryInput) => {
     try {
+      console.log('[DEBUG] createCategory called with data:', data);
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
+      if (!user) {
+        console.error('[DEBUG] User not authenticated');
+        throw new Error('User not authenticated');
+      }
+
+      console.log('[DEBUG] User authenticated:', user.id);
+
+      const insertData = {
+        ...data,
+        user_id: user.id,
+        current_value: 0,
+      };
+
+      console.log('[DEBUG] Inserting category with data:', insertData);
 
       const { data: newCategory, error } = await supabase
         .from('categories')
-        .insert({
-          ...data,
-          user_id: user.id,
-          current_value: 0,
-        })
+        .insert(insertData)
         .select()
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('[DEBUG] Supabase error:', error);
+        throw error;
+      }
+
+      console.log('[DEBUG] Category created successfully:', newCategory);
       
       set(state => ({
         categories: [newCategory, ...state.categories]
@@ -92,6 +107,7 @@ export const useCategoryStore = create<CategoryState>((set, get) => ({
       
       return newCategory;
     } catch (error) {
+      console.error('[DEBUG] createCategory error:', error);
       set({ error: (error as Error).message });
       return null;
     }

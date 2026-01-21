@@ -7,6 +7,7 @@ export function useObjectives(date?: Date, subcategoryId?: string) {
   const [objectives, setObjectives] = useState<MicroObjective[]>([]);
 
   useEffect(() => {
+    // FIX: Ajout de getTodayObjectives dans les dépendances
     const fetchObjectives = async () => {
       const data = await getTodayObjectives();
       let filtered = data;
@@ -19,7 +20,7 @@ export function useObjectives(date?: Date, subcategoryId?: string) {
     };
 
     fetchObjectives();
-  }, [date, subcategoryId]);
+  }, [date, subcategoryId, getTodayObjectives]);
 
   return {
     objectives,
