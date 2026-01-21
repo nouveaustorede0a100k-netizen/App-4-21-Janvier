@@ -2,10 +2,8 @@ import {
   startOfWeek, 
   startOfMonth, 
   startOfDay,
-  isSameDay,
   format,
   parseISO,
-  differenceInDays,
   eachDayOfInterval,
   getDay
 } from 'date-fns'

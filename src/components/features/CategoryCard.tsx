@@ -1,4 +1,3 @@
-import { cn } from '@/utils/cn';
 import { ProgressAnimation } from '@/components/animations/ProgressAnimation';
 import { getIcon } from '@/constants/icons';
 import type { Category } from '@/types';

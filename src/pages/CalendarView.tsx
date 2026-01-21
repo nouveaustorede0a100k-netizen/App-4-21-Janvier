@@ -18,7 +18,7 @@ export default function CalendarView() {
   const { objectives } = useObjectives(selectedDate);
 
   // Create marked dates with colors from categories
-  const markedDates = categories.flatMap(category => {
+  const markedDates = categories.flatMap(() => {
     // This is simplified - in reality, you'd check which dates have objectives
     return [];
   });

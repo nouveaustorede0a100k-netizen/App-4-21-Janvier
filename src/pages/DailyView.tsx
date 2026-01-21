@@ -14,7 +14,7 @@ import { useUIStore } from '@/stores/uiStore';
 import { useObjectives } from '@/hooks/useObjectives';
 import { getIcon } from '@/constants/icons';
 import { Plus } from 'lucide-react';
-import { formatTime, formatDate } from '@/utils/dates';
+import { formatTime } from '@/utils/dates';
 
 export default function DailyView() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function DailyView() {
     fetchCompletions(undefined, new Date());
   }, []);
 
-  const handleObjectiveClick = (objectiveId: string, categoryId: string) => {
+  const handleObjectiveClick = (objectiveId: string) => {
     const isCompleted = completions.some(
       c => c.micro_objective_id === objectiveId && 
       new Date(c.completed_at).toDateString() === new Date().toDateString()
@@ -125,10 +125,6 @@ export default function DailyView() {
                     sub.micro_objectives?.some(obj => obj.id === objective.id)
                   )
                 );
-                const subcategory = category?.subcategories?.find(sub =>
-                  sub.micro_objectives?.some(obj => obj.id === objective.id)
-                );
-
                 if (!category) return null;
 
                 const IconComponent = getIcon(category.icon);
@@ -145,7 +141,7 @@ export default function DailyView() {
                       categoryIcon={<IconComponent className="w-5 h-5 text-white" />}
                       categoryLabel={category.name}
                       isCompleted={isCompleted}
-                      onClick={() => handleObjectiveClick(objective.id, category.id)}
+                      onClick={() => handleObjectiveClick(objective.id)}
                     />
                   </TimelineItem>
                 );

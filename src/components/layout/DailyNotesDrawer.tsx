@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Drawer } from '@/components/ui/Drawer';
 import { Button } from '@/components/ui/Button';
 import { useUIStore } from '@/stores/uiStore';
-import { useObjectiveStore } from '@/stores/objectiveStore';
 import { supabase } from '@/services/supabase';
 import type { DailyNote } from '@/types';
 import { Save } from 'lucide-react';

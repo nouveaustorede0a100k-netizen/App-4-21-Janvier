@@ -5,7 +5,7 @@ export function formatCurrency(value: number, currency: string = 'EUR'): string 
   }).format(value);
 }
 
-export function formatPercentage(value: number, decimals: number = 0): string {
+export function formatPercentage(value: number): string {
   return `${Math.round(value * 100)}%`;
 }
 

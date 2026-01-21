@@ -16,7 +16,7 @@ interface ObjectiveState {
   deleteMicroObjective: (id: string) => Promise<void>;
 }
 
-export const useObjectiveStore = create<ObjectiveState>((set, get) => ({
+export const useObjectiveStore = create<ObjectiveState>((set) => ({
   completions: [],
   loading: false,
   error: null,

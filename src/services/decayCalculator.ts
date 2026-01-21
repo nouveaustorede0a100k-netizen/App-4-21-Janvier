@@ -16,7 +16,7 @@ export function calculateDecay(completions: ObjectiveCompletion[]): number {
   const daysCount = 7;
   const expectedCompletions = daysCount; // Simplified - should be based on frequency
   
-  if (expectedCompletions === 0) return 0;
+  if (expectedCompletions <= 0) return 0;
   
   return Math.min(1, recentCompletions.length / expectedCompletions);
 }
