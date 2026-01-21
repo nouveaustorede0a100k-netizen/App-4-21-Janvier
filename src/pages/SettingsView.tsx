@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/Card';
 import { Toggle } from '@/components/ui/Toggle';
 import { Button } from '@/components/ui/Button';
 import { useUserStore } from '@/stores/userStore';
+import type { UserSettings } from '@/types';
 
 export default function SettingsView() {
   const { user, fetchUser, updateSettings, signOut } = useUserStore();
@@ -14,7 +15,7 @@ export default function SettingsView() {
     fetchUser();
   }, []);
 
-  const handleToggle = (key: keyof typeof user?.settings, value: boolean) => {
+  const handleToggle = (key: keyof UserSettings, value: boolean) => {
     if (user) {
       updateSettings({ [key]: value });
     }
