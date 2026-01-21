@@ -12,7 +12,7 @@ export default function AuthView() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
-  const { signIn, signUp, loading, error: storeError, user } = useUserStore();
+  const { signIn, signUp, loading, error: storeError } = useUserStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

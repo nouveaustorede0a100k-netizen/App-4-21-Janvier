@@ -11,7 +11,7 @@ import CalendarView from './pages/CalendarView'
 import SettingsView from './pages/SettingsView'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, fetchUser } = useUserStore()
+  const { user } = useUserStore()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
