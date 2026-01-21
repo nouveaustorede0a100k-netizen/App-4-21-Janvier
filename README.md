@@ -109,4 +109,4 @@ npm run lint
 - Les micro-objectifs DOIVENT être dans une sous-catégorie
 - Les Daily Notes sont filtrées automatiquement selon le contexte
 - Les animations reflètent la progression RÉELLE (0-100%)
-- Le decay se calcule sur 7 jours glissants
+- Le decay se calcule sur 7 jours glissants# App-4-21-Janvier
