@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -106,6 +106,17 @@ export default function AuthView() {
             placeholder="••••••••"
             required
           />
+
+          {!isSignUp && (
+            <div className="text-right">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-primary-500 hover:text-primary-600 font-medium"
+              >
+                Mot de passe oublié ?
+              </Link>
+            </div>
+          )}
 
           {(error || storeError) && (
             <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">

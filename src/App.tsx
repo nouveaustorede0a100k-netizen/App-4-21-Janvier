@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import { supabase } from './services/supabase'
 import { useUserStore } from './stores/userStore'
 import AuthView from './pages/AuthView'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import DailyView from './pages/DailyView'
 import GoalsView from './pages/GoalsView'
 import CreateCategoryView from './pages/CreateCategoryView'
@@ -79,6 +81,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/auth" element={<AuthView />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/"
           element={
